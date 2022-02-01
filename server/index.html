@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>제목 둠스다리</title>
+
+	<!-- 부트스트랩 -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+	<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", function(){
+			var expires = location.search.substr(location.search.indexOf("=") + 1);
+			console.log(expires);
+			document.getElementById('count').innerHTML = expires + "초";
+		});
+	</script>
+
+	<style type="text/css">
+		#count {
+			margin: 50px auto;
+			width: 200px;
+			height: 200px;
+			background: #3C763D;
+			color: white;
+			border-radius: 50%;
+			text-align: center;
+			line-height: 200px;
+			font-weight: bold;
+			font-size: xx-large;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="count">
+		1초
+	</div>
+	<hr>
+	<div style="text-align: center;">
+		<button type="button" class="btn btn-success">로그인</button>
+        <button type="button" class="btn">카페 글 등록</button>
+	</div>
+</body>
+
+</html>

@@ -1,11 +1,19 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import request from 'request';
+import fs from 'fs';
 
 export const app = express();
 app.use(express.json());
 
 dotenv.config();
+
+app.get('/home', function(req, res) {
+    fs.readFile('index.html', function(error, data) {
+        res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'});
+        res.end(data)
+    });
+});
 
 var client_id = process.env.NAVER_CLIENT_ID;
 var client_secret = process.env.NAVER_CLIENT_SECRET;
