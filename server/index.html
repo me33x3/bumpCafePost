@@ -3,17 +3,33 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>제목 둠스다리</title>
+	<title>UMD</title>
 
-	<!-- 부트스트랩 -->
+	<!-- bootstrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
 	<script type="text/javascript">
+		var expires = 0;
+
 		document.addEventListener("DOMContentLoaded", function(){
-			var expires = location.search.substr(location.search.indexOf("=") + 1);
-			console.log(expires);
-			document.getElementById('count').innerHTML = expires + "초";
+			expires = (location.search.substr(location.search.indexOf("=") + 1)) * 100;
 		});
+
+		var t = setInterval(() => {
+			sec = parseInt(expires / 100);
+			milli = expires % 100;
+
+			document.getElementById("count").innerHTML = to2digit(sec) + ":" + to2digit(milli);
+			expires--;
+
+			if (expires < 0) {
+				clearInterval(t);
+			}
+		}, 10);
+
+		function to2digit(n) {
+			n = n + "";
+			return n.length >= 2 ? n : new Array(2 - n.length + 1).join('0') + n;
+		}
 	</script>
 
 	<style type="text/css">
