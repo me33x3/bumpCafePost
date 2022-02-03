@@ -1,30 +1,38 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="utf-8">
 	<title>UMD</title>
 
 	<!-- bootstrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	<script type="text/javascript">
-		var expires = 0;
-
+	<script type="text/javascript">		
 		document.addEventListener("DOMContentLoaded", function(){
-			expires = (location.search.substr(location.search.indexOf("=") + 1)) * 100;
+			var login = document.getElementById("login");
+			var expires = (location.search.substr(location.search.indexOf("=") + 1)) * 100;
+
+			if (expires > 0) {
+				login.disabled = true;
+
+				var t = setInterval(() => {
+					sec = parseInt(expires / 100);
+					milli = expires % 100;
+
+					document.getElementById("count").innerHTML = to2digit(sec) + ":" + to2digit(milli);
+					expires--;
+
+					if (expires < 0) {
+						login.disabled = false;
+						clearInterval(t);
+					}
+				}, 10);
+			}		
+
+			login.addEventListener("click", function(e) {
+				console.log('!');
+				location.href = "/login";
+			});
 		});
-
-		var t = setInterval(() => {
-			sec = parseInt(expires / 100);
-			milli = expires % 100;
-
-			document.getElementById("count").innerHTML = to2digit(sec) + ":" + to2digit(milli);
-			expires--;
-
-			if (expires < 0) {
-				clearInterval(t);
-			}
-		}, 10);
 
 		function to2digit(n) {
 			n = n + "";
@@ -50,13 +58,12 @@
 
 <body>
 	<div id="count">
-		1초
+		00:00
 	</div>
 	<hr>
 	<div style="text-align: center;">
-		<button type="button" class="btn btn-success">로그인</button>
+		<button id="login" type="button" class="btn btn-success">로그인</button>
         <button type="button" class="btn">카페 글 등록</button>
 	</div>
 </body>
-
 </html>

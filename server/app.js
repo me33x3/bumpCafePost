@@ -21,15 +21,21 @@ var state = "RAMDOM_STATE";
 var redirectURI = encodeURI(process.env.NAVER_REDIRECT);
 
 var api_url = "";
+var token = "";
+
 app.get('/login', function(req, res) {
+    /*
     api_url = 'https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=' + client_id + '&redirect_uri=' + redirectURI + '&state=' + state;
     res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'});
     res.end("<a href='"+ api_url + "'><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>");
+    */
+   console.log('login!!');
+   api_url = 'https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=' + client_id + '&redirect_uri=' + redirectURI + '&state=' + state;
+   location.href = api_url;
 });
 
-var token = "";
 app.get('/callback', function(req, res) {
-   var code = req.query.code;
+    var code = req.query.code;
     var state = req.query.state;
 
     api_url = 'https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id='
