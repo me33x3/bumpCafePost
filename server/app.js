@@ -24,14 +24,9 @@ var api_url = "";
 var token = "";
 
 app.get('/login', function(req, res) {
-    /*
     api_url = 'https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=' + client_id + '&redirect_uri=' + redirectURI + '&state=' + state;
-    res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'});
-    res.end("<a href='"+ api_url + "'><img height='50' src='http://static.nid.naver.com/oauth/small_g_in.PNG'/></a>");
-    */
-   console.log('login!!');
-   api_url = 'https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=' + client_id + '&redirect_uri=' + redirectURI + '&state=' + state;
-   location.href = api_url;
+    res.writeHead(302, {"Location": api_url}); // 302, Temporarily Moved
+    res.end();
 });
 
 app.get('/callback', function(req, res) {
@@ -49,8 +44,14 @@ app.get('/callback', function(req, res) {
     request.get(options, function(error, response, body) {
         if (!error && response.statusCode == 200) {
             token = JSON.parse(body).access_token;
-            res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
-            res.end(body);
+            var expires = JSON.parse(body).expires_in;
+
+            api_url = '/home?expires=' + expires
+            res.writeHead(301, {"Location": api_url}) // 301, Permanently Moved
+            res.end();
+
+            // res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
+            // res.end(body);
         } else {
             res.status(response.statusCode).end();
             console.log('error = ' + response.statusCode);
